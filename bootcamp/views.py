@@ -2,6 +2,7 @@ from django.shortcuts import render
 #Importar HHTTP response
 from  django.http import HttpResponse
 # Create your views here.
+from django.template import loader
 
 def get_koder(request,koder_id):
     koders = [
@@ -20,12 +21,39 @@ def get_koder(request,koder_id):
 
 
 def list_koders(request):
-    koders = [
-         {"name": "Miren",
-         "last_name":"Llamas"},
-        {"name": "Fernando",
-         "last_name":"Fernandez"},
-        {"name": "Rodrigo",
-         "last_name":"Rodriguez"}
+    context={
+        "bootcamp": {"name": "Python", "module":"Django"},
+        "koders" : [
+                {"name": "Miren","last_name":"Llamas","generation":"1g","is_active":True},
+                {"name": "Fernando","last_name":"Fernandez","generation":"1g","is_active":True},
+                {"name": "Rodrigo","last_name":"Rodriguez","generation":"1g","is_active":False},
+        ],
+    }
+    template =loader.get_template("templates/list_Koders.html")
+     #return HttResponse(koders) 
+    return HttpResponse(template.render(context,request))
+      
+def list_mentors(request):
+    context ={
+        "mentors": [
+            {
+                "name": "Benjamin",
+                "last_name": "Aguilar",
+                "is_active": True
+            },
+            {
+                "name": "Alfredo",
+                "last_name": "Altamirano",
+                "is_active": True
+            },
+            {
+                "name": "Charles",
+                "last_name": "Lopez",
+                "is_active": False
+            },
         ]
-    return HttpResponse(koders)    
+       
+    }
+
+    template =loader.get_template("templates/list_mentors.html")
+    return HttpResponse(template.render(context,request))
