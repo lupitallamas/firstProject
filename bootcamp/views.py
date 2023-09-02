@@ -3,8 +3,13 @@ from django.shortcuts import render
 from  django.http import HttpResponse
 # Create your views here.
 from django.template import loader
+from bootcamp.models import Koder
 
 def get_koder(request,koder_id):
+    koders=Koder.objects.filter(pk=koder_id)
+    return HttpResponse(koders)
+
+def get_koder_ant(request,koder_id):
     koders = [
         {"koder_id": 1,
          "name": "Miren",
@@ -21,6 +26,10 @@ def get_koder(request,koder_id):
 
 
 def list_koders(request):
+    koders = Koder.objects.all()
+    return HttpResponse(koders)
+
+def list_Koders_ant(request):
     context={
         "bootcamp": {"name": "Python", "module":"Django"},
         "koders" : [
